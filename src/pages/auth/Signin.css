@@ -1,0 +1,125 @@
+.login-container {
+  display: block;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  height: auto;
+}
+
+.form-container {
+  width: 90%;
+  padding-left: 6%;
+}
+
+.logo-sign {
+  width: 100%;
+  min-width: 100px;
+  max-width: 500px;
+}
+
+.submit-button {
+  width: 50%;
+}
+
+.ion-padding-end {
+  padding-right: 32px;
+}
+
+.icon-smaller {
+  font-size: smaller;
+}
+
+.icon-adjust {
+  transform: translateY(100%);
+}
+
+.custom-row {
+  background: #364254;
+  height: 300px;
+  clip-path: ellipse(100% 100% at 50% 0%);
+}
+
+.custom-div {
+  padding-bottom: 2rem;
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+}
+
+.custom-label {
+  margin-bottom: 12px !important;
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  color: #00aba8 !important;
+}
+
+.custom-input-sign {
+  width: 100% !important;
+  height: 50px;
+  color: var(--ion-color-primary) !important;
+  font: inherit;
+  border: 0.1px solid #00aba8;
+  outline: 0;
+  padding: 15px 15px 15px 15px;
+  border-radius: 16px;
+  text-align: center;
+  padding-right: 30px;
+}
+
+.custom-input {
+  width: 100% !important;
+  height: 50px;
+  color: var(--ion-color-primary) !important;
+  font: inherit;
+  border: 0.1px solid #00aba8;
+  outline: 0;
+  padding: 15px 15px 15px 15px;
+  border-radius: 16px;
+  text-align: left;
+  text-indent: 10px; /* Ajusta el valor según tus necesidades */
+}
+
+.custom-button {
+  font-size: 20px !important;
+  font-weight: bold !important;
+}
+
+ion-row {
+  margin-bottom: 20px;
+}
+
+.custom-input-container {
+  display: flex;
+  align-items: center; /* Alinea verticalmente el icono con el input */
+  position: relative;
+}
+
+.custom-input-container .icon-smaller {
+  position: absolute;
+  right: 10px; /* Alinea el icono a la derecha del input */
+  font-size: 1.5rem; /* Ajusta el tamaño del icono */
+  color: #c4c4c4;
+  cursor: pointer;
+  top: 50%;
+  z-index: 10;
+  transform: translate(0, -50%);
+}
+
+.custom-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

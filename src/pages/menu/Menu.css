@@ -1,0 +1,51 @@
+.my-list {
+  background: transparent;
+  --ion-background-color: transparent;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.avatar-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100px;
+  width: 100px;
+  justify-content: center;
+}
+
+.avatar {
+  border-radius: 30px;
+  height: 80px;
+  width: 80px;
+}
+
+.profile-data {
+  padding: 10px;
+  width: 100% - 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.profile-name {
+  font-size: 16px;
+  color: black;
+}
+
+.profile-email {
+  font-size: 14px;
+}
+
+.profile-job {
+  font-size: 14px;
+}
+
+ion-list-header {
+  --color: var(--ion-color-tertiary);
+}

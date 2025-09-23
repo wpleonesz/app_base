@@ -1,0 +1,22 @@
+.audun_info {
+  background-color: var(--ion-color-light);
+  border-radius: 0.5em;
+  border: 1px solid #e8f4fd;
+  padding: 1.5em;
+  text-align: justify;
+  width: 100%;
+}
+.form_ui {
+  border-radius: 5px;
+  padding: 1em;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.custom-button2 {
+  font-size: 12px !important;
+  font-weight: bold !important;
+}
+p {
+  color: var(--ion-color-primary);
+}

@@ -1,0 +1,29 @@
+/*
+css button readmore
+*/
+
+.texto {
+  width: 75%;
+  display: block;
+}
+
+.expanded {
+  width: 100%;
+}
+
+.boton {
+  width: 25%;
+  display: inline-block;
+  text-align: right;
+  margin-left: -17px;
+}
+.subtexto {
+  font-weight: bold;
+}
+
+.ion-center-vertical {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Esto asegura que la altura de la div sea igual al 100% del viewport */
+}

@@ -1,0 +1,11 @@
+.logo {
+  filter: brightness(0) saturate(100%) invert(0) sepia(0%) hue-rotate(0deg)
+    brightness(350%) contrast(1.2);
+  /* Ajuste los valores de brillo y contraste según sea necesario */
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo {
+    filter: none; /* no aplicar ningún filtro en modo oscuro */
+  }
+}
