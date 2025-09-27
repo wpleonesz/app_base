@@ -18,7 +18,7 @@ import Refresher from 'components/common/Refresher';
 import './Home.css';
 import { Network } from '@capacitor/network';
 
-const Home: React.FC = () => {
+const Home = (): JSX.Element => {
   const [loading, setLoading] = useState(true);
   const [showToast, setShowToast] = useState(false);
   const [toastData, setToastData] = useState<any>({});

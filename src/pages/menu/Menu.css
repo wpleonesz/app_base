@@ -3,47 +3,32 @@
   --ion-background-color: transparent;
 }
 
-.profile-container {
-  display: flex;
-  flex-direction: row;
-  padding: 10px;
+.menu-section {
+  padding: 0.75rem 1rem 1.25rem 1rem;
+  margin-bottom: 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
 }
 
-.avatar-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 100px;
-  width: 100px;
-  justify-content: center;
+.section-header {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ion-color-medium);
+  margin: 0 0 0.5rem 0;
 }
 
-.avatar {
-  border-radius: 30px;
-  height: 80px;
-  width: 80px;
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.75rem;
+  align-items: stretch;
 }
 
-.profile-data {
-  padding: 10px;
-  width: 100% - 100px;
+.actions {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-.profile-name {
-  font-size: 16px;
-  color: black;
-}
-
-.profile-email {
-  font-size: 14px;
-}
-
-.profile-job {
-  font-size: 14px;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
 }
 
 ion-list-header {

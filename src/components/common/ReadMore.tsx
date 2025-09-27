@@ -35,14 +35,20 @@ const ReadMore = ({ children }: any) => {
           {showButton && text.length > MAX_LENGTH && (
             <span
               onClick={toggleTruncate}
-              style={{ color: '#0d6efd', display: 'inline-block' }}
+              style={{
+                color: 'var(--ion-color-primary)',
+                display: 'inline-block',
+              }}
             >
               Ver todo
             </span>
           )}
         </div>
         {!isTruncated && (
-          <span onClick={toggleTruncate} style={{ color: '#0d6efd' }}>
+          <span
+            onClick={toggleTruncate}
+            style={{ color: 'var(--ion-color-primary)' }}
+          >
             Ver menos
           </span>
         )}

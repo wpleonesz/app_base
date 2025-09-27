@@ -1,14 +1,5 @@
 import ProfileCard from 'components/user/ProfileCard';
-import {
-  IonPage,
-  IonToast,
-  IonLoading,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonList,
-  IonListHeader,
-} from '@ionic/react';
+import { IonPage, IonToast, IonLoading } from '@ionic/react';
 import { useState } from 'react';
 import { clearCookies } from 'lib/api';
 import { authService } from 'services/auth.service';
@@ -82,98 +73,29 @@ const Menu = (props: any) => {
       <IonContentBacgraund>
         <ProfileCard />
 
-        {/* Agregar botones manuales para recuperar cuenta y cerrar sesión */}
-        <div className="ion-no-padding">
-          <IonList
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            <IonListHeader
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              Contraseña
-            </IonListHeader>
-          </IonList>
-          <IonGrid
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            <IonRow
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              <IonCol
-                size="4"
-                placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-              >
-                <MenuButton
-                  title="Cambiar"
-                  logo={repeatOutline}
-                  link="/menu/password/change"
-                />
-              </IonCol>
-              <IonCol
-                size="4"
-                placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-              >
-                <MenuButton
-                  title="Recuperar"
-                  logo={returnUpBackOutline}
-                  onClick={() => recoverAccount()}
-                />
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-        </div>
+        {/* Sección de Contraseña */}
+        <section className="menu-section">
+          <div className="section-header">Contraseña</div>
+          <div className="menu-grid">
+            <MenuButton
+              title="Cambiar"
+              logo={repeatOutline}
+              link="/menu/password/change"
+            />
+            <MenuButton
+              title="Recuperar"
+              logo={returnUpBackOutline}
+              onClick={() => recoverAccount()}
+            />
+          </div>
+        </section>
 
-        <div className="ion-no-padding">
-          <IonList
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            <IonListHeader
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              Cuenta
-            </IonListHeader>
-          </IonList>
-          <IonGrid
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            <IonRow
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              <IonCol
-                size="4"
-                placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-              >
-                <MenuButton
-                  title="Cerrar Sesión"
-                  logo={logOut}
-                  onClick={signOut}
-                />
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-        </div>
+        <section className="menu-section">
+          <div className="section-header">Cuenta</div>
+          <div className="menu-grid">
+            <MenuButton title="Cerrar Sesión" logo={logOut} onClick={signOut} />
+          </div>
+        </section>
       </IonContentBacgraund>
       <Footer />
       <IonLoading isOpen={loading} message={'Por favor espere...'} />

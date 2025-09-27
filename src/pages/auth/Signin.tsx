@@ -16,7 +16,7 @@ import {
   IonRouterLink,
   IonFooter,
 } from '@ionic/react';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { institutionService } from 'services/institution.service';
 import { authService, Credentials } from 'services/auth.service';
 import { profileData } from 'storage/profile';
@@ -25,7 +25,7 @@ import './Signin.css';
 import { isEmpty } from 'lodash';
 import { institutionData } from 'storage/institution';
 import Recover from 'pages/user/recover';
-import { eyeOutline, eyeOffOutline } from 'ionicons/icons';
+import { eyeOutline, eyeOffOutline, logInOutline } from 'ionicons/icons';
 
 const defaultCredentials = { username: '', password: '' };
 
@@ -33,6 +33,7 @@ const Signin = (props: any) => {
   const [form, setForm] = useState<Credentials>(defaultCredentials);
   const [, setInstitution] = useState<any>('');
   const [, setLogo] = useState<any>('');
+  const usernameRef = useRef<HTMLIonInputElement | null>(null);
   const [institutions, setInstitutions] = useState([]);
   const [loadingInstitutions, setLoadingInstitutions] = useState(false);
   const [showToast, setShowToast] = useState<boolean>(false);
@@ -110,6 +111,13 @@ const Signin = (props: any) => {
     }
   };
 
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      // Evitar doble submit si ya está cargando
+      if (!loading) onSubmit();
+    }
+  };
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -119,269 +127,164 @@ const Signin = (props: any) => {
 
   return (
     <IonApp>
-      <IonPage
-        placeholder={undefined}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
-      >
-        <IonContent
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-        >
-          <IonRow
-            className="custom-row"
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            <IonCol
-              size="12"
-              size-sm="12"
-              size-md="12"
-              size-lg="12"
-              size-xl="12"
-              className="ion-align-self-center"
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              <div>
-                <div className="logo-container">
-                  <img
-                    className="logo-sign"
-                    src="assets/images/logo.png"
-                    alt="logo"
-                  />
-                </div>
-              </div>
-            </IonCol>
-          </IonRow>
-          <IonRow
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            <IonCol
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
+      <IonPage>
+        <IonContent>
+          {/* Cabecera reducida: el logo ya está dentro de la tarjeta de login */}
+          <IonRow>
+            <IonCol>
               <div className="login-container">
-                <div className="form-container">
-                  <div className="custom-div">
-                    <IonLabel
-                      position="stacked"
-                      className="custom-label"
-                      placeholder={undefined}
-                      onPointerEnterCapture={undefined}
-                      onPointerLeaveCapture={undefined}
-                    >
-                      USUARIO
-                    </IonLabel>
-                    <IonInput
-                      value={form.username}
-                      onIonChange={(e) =>
-                        setForm({ ...form, username: e.detail.value!.trim() })
-                      }
-                      className="custom-input-sign"
-                      required
-                      placeholder={undefined}
-                      onPointerEnterCapture={undefined}
-                      onPointerLeaveCapture={undefined}
+                <div className="login-card">
+                  <div className="logo-container">
+                    <img
+                      className="logo-sign"
+                      src="assets/images/logo.png"
+                      alt="logo"
                     />
-                    {submitted && isUsernameEmpty && (
-                      <IonLabel
-                        color="danger"
-                        placeholder={undefined}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      >
-                        Por favor ingrese su nombre de usuario.
-                      </IonLabel>
-                    )}
                   </div>
 
-                  <div className="ion-padding-bottom custom-div">
-                    <IonLabel
-                      position="stacked"
-                      className="custom-label"
-                      placeholder={undefined}
-                      onPointerEnterCapture={undefined}
-                      onPointerLeaveCapture={undefined}
-                    >
-                      CONTRASEÑA
-                    </IonLabel>
-                    <div className="custom-input-container">
+                  <div className="headline">Bienvenido</div>
+                  <div className="subhead">Inicia sesión para continuar</div>
+
+                  <div className="form-container">
+                    <div>
+                      <label className="custom-label">USUARIO</label>
                       <IonInput
-                        type={showPassword ? 'text' : 'password'}
-                        value={form.password}
+                        ref={usernameRef}
+                        value={form.username}
                         onIonChange={(e) =>
-                          setForm({ ...form, password: e.detail.value! })
+                          setForm({
+                            ...form,
+                            username: (e.detail.value || '').toString(),
+                          })
                         }
-                        className="ion-padding-end custom-input-sign"
+                        onKeyDown={onKeyDown}
+                        inputmode="text"
+                        className="custom-input"
                         required
-                        placeholder={undefined}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
+                        aria-label="Nombre de usuario"
                       />
-                      <IonIcon
-                        slot="end"
-                        icon={showPassword ? eyeOutline : eyeOffOutline}
-                        onClick={toggleShowPassword}
-                        className="icon-smaller icon-adjust"
-                        placeholder={undefined}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
+                      {submitted && isUsernameEmpty && (
+                        <IonLabel color="danger" role="alert">
+                          Por favor ingrese su nombre de usuario.
+                        </IonLabel>
+                      )}
                     </div>
-                    {submitted && isPasswordEmpty && (
-                      <IonLabel
-                        color="danger"
-                        placeholder={undefined}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      >
-                        Por favor ingrese su contraseña.
-                      </IonLabel>
-                    )}
+
+                    <div>
+                      <label className="custom-label">CONTRASEÑA</label>
+                      <div className="custom-input-container">
+                        <IonInput
+                          type={showPassword ? 'text' : 'password'}
+                          value={form.password}
+                          onIonChange={(e) =>
+                            setForm({
+                              ...form,
+                              password: (e.detail.value || '').toString(),
+                            })
+                          }
+                          onKeyDown={onKeyDown}
+                          className="custom-input"
+                          required
+                          aria-label="Contraseña"
+                        />
+                        <IonIcon
+                          icon={showPassword ? eyeOutline : eyeOffOutline}
+                          onClick={toggleShowPassword}
+                          className="icon-smaller"
+                          role="button"
+                          aria-label={
+                            showPassword
+                              ? 'Ocultar contraseña'
+                              : 'Mostrar contraseña'
+                          }
+                        />
+                      </div>
+                      {submitted && isPasswordEmpty && (
+                        <IonLabel color="danger" role="alert">
+                          Por favor ingrese su contraseña.
+                        </IonLabel>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="custom-label">INSTITUCIÓN</label>
+                      {loadingInstitutions ? (
+                        <IonSpinner />
+                      ) : (
+                        <IonSelect
+                          value={form.institutionId}
+                          placeholder="Seleccione"
+                          onIonChange={(e) => {
+                            setForm({
+                              ...form,
+                              institutionId: e.detail.value!,
+                            });
+                            const selected: any = institutions.find(
+                              (item: any) => item.id === e.detail.value,
+                            );
+                            setInstitution(selected.name);
+                            setLogo(selected.logo);
+                          }}
+                          className="custom-input"
+                        >
+                          {institutions.map((item: any) => (
+                            <IonSelectOption value={item.id} key={item.id}>
+                              {item.name}
+                            </IonSelectOption>
+                          ))}
+                        </IonSelect>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="custom-div">
-                    <IonLabel
-                      position="stacked"
-                      className="custom-label"
-                      placeholder={undefined}
-                      onPointerEnterCapture={undefined}
-                      onPointerLeaveCapture={undefined}
-                    >
-                      INSTITUCIÓN
-                    </IonLabel>
-                    {loadingInstitutions ? (
-                      <IonSpinner
-                        placeholder={undefined}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
-                    ) : (
-                      <IonSelect
-                        value={form.institutionId}
-                        placeholder="Seleccione"
-                        onIonChange={(e) => {
-                          setForm({ ...form, institutionId: e.detail.value! });
-                          const selected: any = institutions.find(
-                            (item: any) => item.id === e.detail.value,
-                          );
-                          setInstitution(selected.name);
-                          setLogo(selected.logo);
-                        }}
-                        className="custom-input-sign"
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      >
-                        {institutions.map((item: any) => (
-                          <IonSelectOption
-                            value={item.id}
-                            placeholder={undefined}
-                            onPointerEnterCapture={undefined}
-                            onPointerLeaveCapture={undefined}
-                          >
-                            {item.name}
-                          </IonSelectOption>
-                        ))}
-                      </IonSelect>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </IonCol>
-          </IonRow>
-          <IonRow
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            <IonCol
-              className="ion-align-self-center"
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              {isEmpty(institutions) && !loadingInstitutions && (
-                <div className="custom-center">
-                  <div className="submit-button">
-                    <IonButton
-                      expand="block"
-                      onClick={load}
-                      color="danger"
-                      placeholder={undefined}
-                      onPointerEnterCapture={undefined}
-                      onPointerLeaveCapture={undefined}
-                    >
-                      <IonIcon
-                        slot="start"
-                        placeholder={undefined}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
-                      <IonLabel
-                        color="light"
-                        placeholder={undefined}
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
+                  {/* Acciones: botón de recarga (si aplica), botón de login y enlace de recuperar */}
+                  <div className="actions">
+                    {isEmpty(institutions) && !loadingInstitutions && (
+                      <IonButton
+                        expand="block"
+                        onClick={load}
+                        className="submit-button"
+                        style={{ marginBottom: '0.5rem' }}
                       >
                         Recargar instituciones
-                      </IonLabel>
+                      </IonButton>
+                    )}
+
+                    <IonButton
+                      className="submit-button"
+                      expand="block"
+                      onClick={onSubmit}
+                      disabled={loading || isUsernameEmpty || isPasswordEmpty}
+                    >
+                      {loading ? (
+                        <>
+                          <IonSpinner name="crescent" />
+                          &nbsp;Cargando...
+                        </>
+                      ) : (
+                        <>
+                          <IonIcon icon={logInOutline} className="btn-icon" />
+                          <span className="btn-text">INICIAR SESIÓN</span>
+                        </>
+                      )}
                     </IonButton>
                   </div>
+
+                  <div className="custom-center">
+                    <Recover />
+                  </div>
                 </div>
-              )}
-              <div className="custom-center">
-                <div className="submit-button">
-                  <IonButton
-                    color="tertiary"
-                    className="custom-button"
-                    expand="block"
-                    size="small"
-                    shape="round"
-                    onClick={onSubmit}
-                    placeholder={undefined}
-                    onPointerEnterCapture={undefined}
-                    onPointerLeaveCapture={undefined}
-                  >
-                    INICIAR SESIÓN
-                  </IonButton>
-                </div>
-              </div>
-              <div className="custom-center">
-                <Recover />
               </div>
             </IonCol>
           </IonRow>
-          <IonFooter
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            <IonRow
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
-              <IonCol
-                className="ion-align-self-center"
-                placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-              >
+          <IonFooter>
+            <IonRow>
+              <IonCol className="ion-align-self-center">
                 <div className="custom-center">
                   <p className="custom-text">
                     <IonRouterLink
                       color="primary"
                       href="https://app.uea.edu.ec/policies"
-                      placeholder={undefined}
-                      onPointerEnterCapture={undefined}
-                      onPointerLeaveCapture={undefined}
                     >
                       Políticas de privacidad
                     </IonRouterLink>
